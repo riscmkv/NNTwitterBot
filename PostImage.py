@@ -1,0 +1,3 @@
+import twitterBotAPI
+
+twitterBotAPI.postTweet()
