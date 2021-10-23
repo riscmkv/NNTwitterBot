@@ -10,7 +10,8 @@ import time
 import string
 import oauth2 as oauth
 import logging
-import alexnet
+import resnext
+import confidence
 
 logger = logging.getLogger('image bot')
 logger.setLevel(logging.DEBUG)
@@ -240,9 +241,9 @@ def postTweet(fanSubmit=False):
     logger.info('img path: ' + img_path)
     logger.info('submitter: ' + submitter)
 
-    prediction = alexnet.alexnet_classify(img_path)
-    (certainty, img_classification) = (prediction[1][0], prediction[0][0])
-    message = "Image prediction: " + img_classification + "\n" + "Softmax value: " + str(round(certainty*100, 2)) + "%"
+    prediction = resnext.resnext_classify(img_path)
+    (certainty, img_classification) = (confidence.calc_confidence_idx(img_path, prediction[2][0]), prediction[0][0])
+    message = "Image prediction: " + img_classification + "\n" + "confidence: " + str(round(certainty*100, 2)) + "%"
 
     if(submitter != 'none') and (fanSubmit):
         message = message + '\nSubmission by @' + submitter
@@ -280,8 +281,8 @@ def PostTweetFname(fname, customMsg=None):
     img_path = fname
     submitter = getSubmitterName(fname)
 
-    prediction = alexnet.alexnet_classify(img_path)
-    (certainty, img_classification) = (prediction[1][0], prediction[0][0])
+    prediction = resnext.resnext_classify(img_path)
+    (certainty, img_classification) = (confidence.calc_confidence_idx(img_path, prediction[2][0]), prediction[0][0])
     message = "Image prediction: " + img_classification + "\n" + "Confidence: " + str(round(certainty*100, 2)) + "%"
     
     if customMsg:

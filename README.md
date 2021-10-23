@@ -2,7 +2,7 @@
 
 This github repository is BASED and is yanderedev levels of spaghetti
 
-Neural net code can be found in alexnet.py. Despite the name, it actually uses ResNeXt - whoops.
+Neural net code can be found in resnext.py. Despite the name, it actually uses ResNeXt - whoops.
 
 Twitter bot code can be found in twitterBotAPI.py. Authorization keys obviously not uploaded to github.
 
