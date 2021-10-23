@@ -243,7 +243,7 @@ def postTweet(fanSubmit=False):
 
     prediction = resnext.resnext_classify(img_path)
     (certainty, img_classification) = (confidence.calc_confidence_idx(img_path, prediction[2][0]), prediction[0][0])
-    message = "Image prediction: " + img_classification + "\n" + "confidence: " + str(round(certainty*100, 2)) + "%"
+    message = "Image prediction: " + img_classification + "\n" + "Confidence: " + str(round(certainty*100, 2)) + "%"
 
     if(submitter != 'none') and (fanSubmit):
         message = message + '\nSubmission by @' + submitter
