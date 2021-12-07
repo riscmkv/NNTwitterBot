@@ -104,7 +104,7 @@ def GetImage(fanSubmit=False):
     
 def RemoveFromQueue(img_path):
     fname = img_path.split('\\')[-1]
-    shutil.move(img_path, "./submissions_completed/" + fname)
+    shutil.move(img_path, "./submissions_completed/")
 
 def getSubmitterName(fname):
     if(len(fname.split('.')) < 3):
