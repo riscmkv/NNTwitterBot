@@ -221,7 +221,18 @@ def grab_submissions():
         else:
             continue
 
-
+def gen_tweet_string(prediction, img_path):
+    message = None
+    if (prediction[0][0] == "comic book") or (prediction[0][0] == "book jacket"):
+        confidence_first_guess = confidence.calc_confidence_idx(img_path, prediction[2][0])
+        confidence_second_guess = confidence.calc_confidence_idx(img_path, prediction[2][1])
+        message = "Image prediction:\n"
+        message += prediction[0][0] + " (" + str(round(confidence_first_guess*100, 2)) + "%)\n"
+        message += prediction[0][1] + " (" + str(round(confidence_second_guess*100, 2)) + "%)"
+    else:
+        (certainty, img_classification) = (confidence.calc_confidence_idx(img_path, prediction[2][0]), prediction[0][0])
+        message = "Image prediction: " + img_classification + "\n" + "Confidence: " + str(round(certainty*100, 2)) + "%"
+    return message
 
 def postTweet(fanSubmit=False):
     twitter = Twython(
@@ -242,8 +253,7 @@ def postTweet(fanSubmit=False):
     logger.info('submitter: ' + submitter)
 
     prediction = resnext.resnext_classify(img_path)
-    (certainty, img_classification) = (confidence.calc_confidence_idx(img_path, prediction[2][0]), prediction[0][0])
-    message = "Image prediction: " + img_classification + "\n" + "Confidence: " + str(round(certainty*100, 2)) + "%"
+    message = gen_tweet_string(prediction, img_path)
 
     if(submitter != 'none') and (fanSubmit):
         message = message + '\nSubmission by @' + submitter
@@ -282,8 +292,7 @@ def PostTweetFname(fname, customMsg=None):
     submitter = getSubmitterName(fname)
 
     prediction = resnext.resnext_classify(img_path)
-    (certainty, img_classification) = (confidence.calc_confidence_idx(img_path, prediction[2][0]), prediction[0][0])
-    message = "Image prediction: " + img_classification + "\n" + "Confidence: " + str(round(certainty*100, 2)) + "%"
+    message = gen_tweet_string(prediction, img_path)
     
     if customMsg:
         message = message + "\n" + customMsg
