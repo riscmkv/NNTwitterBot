@@ -223,7 +223,9 @@ def grab_submissions():
 
 def gen_tweet_string(prediction, img_path):
     message = None
-    if (prediction[0][0] == "comic book") or (prediction[0][0] == "book jacket"):
+    if (prediction[0][0] == "comic book")
+       or (prediction[0][0] == "book jacket")
+       or (prediction[0][0] == "web site"):
         confidence_first_guess = confidence.calc_confidence_idx(img_path, prediction[2][0])
         confidence_second_guess = confidence.calc_confidence_idx(img_path, prediction[2][1])
         message = "Image prediction:\n"
