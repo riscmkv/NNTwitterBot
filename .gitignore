@@ -1,0 +1,12 @@
+auth.py
+__pycache__/
+fan_submit/
+submissions/
+submissions_completed/
+submissions_unmoderated/
+testimg/
+*.log
+PostFanSubmitImage.sh
+PostImageUserSubmit.sh
+twitterBotAPI.pyc
+PostImage.sh
