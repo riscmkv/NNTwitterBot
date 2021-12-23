@@ -306,7 +306,6 @@ def PostTweetFname(fname, customMsg=None):
     twitter.update_status(status=message, media_ids=media_id)
     img_post.close()
 
-    fname = img_path.split('\\')[-1]
-    shutil.move("./submissions/" + fname, "./submissions_completed/" + fname)
-    
-    grab_submissions()
+    if(not QueueIsEmpty()):
+        logger.info('removing from queue...')
+        RemoveFromQueue(img_path)
