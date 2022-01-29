@@ -226,15 +226,28 @@ def gen_tweet_string(prediction, img_path):
     if (prediction[0][0] == "comic book")       \
        or (prediction[0][0] == "book jacket")   \
        or (prediction[0][0] == "web site"):
-        confidence_first_guess = confidence.calc_confidence_idx(img_path, prediction[2][0])
-        confidence_second_guess = confidence.calc_confidence_idx(img_path, prediction[2][1])
+
+        confidence_calced = [None, None, None, None]
+        confidence_calced[0] = confidence.calc_confidence_idx(img_path, prediction[2][0])
+        confidence_calced[1] = confidence.calc_confidence_idx(img_path, prediction[2][1])
+        confidence_calced[2] = confidence.calc_confidence_idx(img_path, prediction[2][2])
+        confidence_calced[3] = confidence.calc_confidence_idx(img_path, prediction[2][3])
+
         message = "Image prediction:\n"
-        message += prediction[0][0] + " (" + str(round(confidence_first_guess*100, 2)) + "%)\n"
-        message += prediction[0][1] + " (" + str(round(confidence_second_guess*100, 2)) + "%)"
+        message += prediction[0][0] + " (" + str(round(confidence_calced[0]*100, 2)) + "%)\n"
+        message += prediction[0][1] + " (" + str(round(confidence_calced[1]*100, 2)) + "%)\n"
+        message += prediction[0][2] + " (" + str(round(confidence_calced[2]*100, 2)) + "%)\n"
+        message += prediction[0][3] + " (" + str(round(confidence_calced[3]*100, 2)) + "%)"
+
     else:
         (certainty, img_classification) = (confidence.calc_confidence_idx(img_path, prediction[2][0]), prediction[0][0])
         message = "Image prediction: " + img_classification + "\n" + "Confidence: " + str(round(certainty*100, 2)) + "%"
     return message
+
+def peek_prediction(img_path):
+    prediction = resnext.resnext_classify(img_path)
+    conf = str(round(confidence.calc_confidence_idx(img_path, prediction[2][0]), 2))
+    print(prediction[0][0] + " " + conf)
 
 def postTweet(fanSubmit=False):
     twitter = Twython(
