@@ -252,9 +252,9 @@ def gen_additional_prediction_string(prediction, img_path):
     confidence_calcs[1] = confidence.calc_confidence_idx(img_path, prediction[2][2])
     confidence_calcs[2] = confidence.calc_confidence_idx(img_path, prediction[2][3])
     message = 'additional image predictions:\n'
-    message += '- ' + prediction[0][1] + ' (confidence: ' + str(round(confidence_calced[0]*100, 2)) + '%)\n'
-    message += '- ' + prediction[0][2] + ' (confidence: ' + str(round(confidence_calced[1]*100, 2)) + '%)\n'
-    message += '- ' + prediction[0][3] + ' (confidence: ' + str(round(confidence_calced[2]*100, 2)) + '%)\n'
+    message += '- ' + prediction[0][1] + ' (confidence: ' + str(round(confidence_calcs[0]*100, 2)) + '%)\n'
+    message += '- ' + prediction[0][2] + ' (confidence: ' + str(round(confidence_calcs[1]*100, 2)) + '%)\n'
+    message += '- ' + prediction[0][3] + ' (confidence: ' + str(round(confidence_calcs[2]*100, 2)) + '%)\n'
     return message
 
 def peek_prediction(img_path):
