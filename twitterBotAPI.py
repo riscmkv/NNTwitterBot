@@ -221,11 +221,13 @@ def grab_submissions():
         else:
             continue
 
+def is_boring_prediction(prediction):
+    prediction_text = prediction[0][0]
+    return (prediction_text == 'comic book') or (prediction_text == 'book jacket') or (prediction_text == 'web site')
+
 def gen_tweet_string(prediction, img_path):
     message = None
-    if (prediction[0][0] == "comic book")       \
-       or (prediction[0][0] == "book jacket")   \
-       or (prediction[0][0] == "web site"):
+    if is_boring_prediction(prediction):
 
         confidence_calced = [None, None, None, None]
         confidence_calced[0] = confidence.calc_confidence_idx(img_path, prediction[2][0])
@@ -242,6 +244,17 @@ def gen_tweet_string(prediction, img_path):
     else:
         (certainty, img_classification) = (confidence.calc_confidence_idx(img_path, prediction[2][0]), prediction[0][0])
         message = "Image prediction: " + img_classification + "\n" + "Confidence: " + str(round(certainty*100, 2)) + "%"
+    return message
+
+def gen_additional_prediction_string(prediction, img_path):
+    confidence_calcs = [None, None, None]
+    confidence_calcs[0] = confidence.calc_confidence_idx(img_path, prediction[2][1])
+    confidence_calcs[1] = confidence.calc_confidence_idx(img_path, prediction[2][2])
+    confidence_calcs[2] = confidence.calc_confidence_idx(img_path, prediction[2][3])
+    message = 'additional image predictions:\n'
+    message += '- ' + prediction[0][1] + ' (confidence: ' + str(round(confidence_calced[0]*100, 2)) + '%)\n'
+    message += '- ' + prediction[0][2] + ' (confidence: ' + str(round(confidence_calced[1]*100, 2)) + '%)\n'
+    message += '- ' + prediction[0][3] + ' (confidence: ' + str(round(confidence_calced[2]*100, 2)) + '%)\n'
     return message
 
 def peek_prediction(img_path):
@@ -269,6 +282,7 @@ def postTweet(fanSubmit=False):
 
     prediction = resnext.resnext_classify(img_path)
     message = gen_tweet_string(prediction, img_path)
+    additional_message = gen_additional_prediction_string(prediction, img_path)
 
     if(submitter != 'none') and (fanSubmit):
         message = message + '\nSubmission by @' + submitter
@@ -280,7 +294,9 @@ def postTweet(fanSubmit=False):
     media_id = [response['media_id']]
  
     try:
-        twitter.update_status(status=message, media_ids=media_id)
+        status = twitter.update_status(status=message, media_ids=media_id)
+        if not is_boring_prediction(prediction):
+            twitter.update_status(status=additional_message, in_reply_to_status_id=status.id_str)
     except:
         logger.info("update failed! Could not connect?")
         return
@@ -308,6 +324,7 @@ def PostTweetFname(fname, customMsg=None):
 
     prediction = resnext.resnext_classify(img_path)
     message = gen_tweet_string(prediction, img_path)
+    additional_message = gen_additional_prediction_string(prediction, img_path)
     
     if customMsg:
         message = message + "\n" + customMsg
@@ -318,7 +335,9 @@ def PostTweetFname(fname, customMsg=None):
     img_post = open(img_path, 'rb')
     response = twitter.upload_media(media=img_post)
     media_id = [response['media_id']]
-    twitter.update_status(status=message, media_ids=media_id)
+    status = twitter.update_status(status=message, media_ids=media_id)
+    if not is_boring_prediction(prediction):
+        twitter.update_status(status=additional_message, in_reply_to_status_id=status.id_str)
     img_post.close()
 
     if(not QueueIsEmpty()):
