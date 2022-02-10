@@ -39,7 +39,7 @@ preprocess_tilt = transforms.Compose([
 
 def resnext_run(filename, preprocess=preprocess_default):
     # sample execution (requires torchvision)
-    input_image = Image.open(filename)
+    input_image = Image.open(filename).convert('RGB')
     input_tensor = preprocess(input_image)
     input_batch = input_tensor.unsqueeze(0) # create a mini-batch as expected by the model
 
