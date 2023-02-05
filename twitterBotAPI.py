@@ -12,6 +12,7 @@ import oauth2 as oauth
 import logging
 import resnext
 import confidence
+import os
 
 logger = logging.getLogger('image bot')
 logger.setLevel(logging.DEBUG)
@@ -104,7 +105,7 @@ def GetImage(fanSubmit=False):
     
 def RemoveFromQueue(img_path):
     fname = img_path.split('\\')[-1]
-    shutil.move(img_path, "./submissions_completed/")
+    os.remove(img_path)
 
 def getSubmitterName(fname):
     if(len(fname.split('.')) < 3):
@@ -246,8 +247,8 @@ def gen_tweet_string(prediction, img_path):
 
 def peek_prediction(img_path):
     prediction = resnext.resnext_classify(img_path)
-    conf = str(round(confidence.calc_confidence_idx(img_path, prediction[2][0]), 2))
-    print(prediction[0][0] + " " + conf)
+    message = gen_tweet_string(prediction, img_path)
+    print(message)
 
 def postTweet(fanSubmit=False):
     twitter = Twython(
@@ -271,7 +272,7 @@ def postTweet(fanSubmit=False):
     message = gen_tweet_string(prediction, img_path)
 
     if(submitter != 'none') and (fanSubmit):
-        message = message + '\nSubmission by @' + submitter
+        message = message + '\nSubmission by @.' + submitter.replace('@', '')
 
     logger.info('message: ' + message)
 
@@ -295,7 +296,7 @@ def postTweet(fanSubmit=False):
     #grab_submissions()
 
 	
-def PostTweetFname(fname, customMsg=None):
+def PostTweetFname(fname, customMsg=None, hideSubmitter=False):
     twitter = Twython(
         consumer_key,
         consumer_secret,
@@ -312,8 +313,8 @@ def PostTweetFname(fname, customMsg=None):
     if customMsg:
         message = message + "\n" + customMsg
 
-    if(submitter != 'none'):
-        message = message + '\nSubmission by @' + submitter
+    if(submitter != 'none') and (not hideSubmitter):
+        message = message + '\nSubmission by @.' + submitter
 
     img_post = open(img_path, 'rb')
     response = twitter.upload_media(media=img_post)
