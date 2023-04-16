@@ -1,5 +1,5 @@
 import argparse
-import twitterBotAPI
+import TwitterClasses
 
 def main():
     parser = argparse.ArgumentParser(description="Posts a randomly drawn image",
@@ -8,7 +8,7 @@ def main():
                         help="Whether or not to draw image from submission pool")
     args = parser.parse_args()
 
-    twitterBotAPI.postTweet(fanSubmit=args.fansubmit)
+    TwitterClasses.postTweet(fanSubmit=args.fansubmit)
 
 if __name__ == "__main__":
     main()

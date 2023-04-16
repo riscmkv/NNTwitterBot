@@ -1,3 +1,3 @@
-import twitterBotAPI
+import TwitterClasses
 
-twitterBotAPI.postTweet(fanSubmit=True)
+TwitterClasses.postTweet(fanSubmit=True)
