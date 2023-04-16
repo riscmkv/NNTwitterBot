@@ -1,5 +1,5 @@
 import argparse
-import twitterBotAPI
+import TwitterClasses
 
 def main():
     parser = argparse.ArgumentParser(description="Posts a tweet with a given filename with a custom name",
@@ -11,9 +11,9 @@ def main():
     args = parser.parse_args()
 
     if (args.peekprediction is None):
-        twitterBotAPI.PostTweetFname(args.fname, customMsg=args.custommsg, hideSubmitter=args.hidesubmitter)
+        TwitterClasses.PostTweetFname(args.fname, customMsg=args.custommsg, hideSubmitter=args.hidesubmitter)
     else:
-        twitterBotAPI.peek_prediction(args.peekprediction)
+        TwitterClasses.peek_prediction(args.peekprediction)
 
 if __name__ == "__main__":
     main()
