@@ -1,5 +1,5 @@
-import twitterBotAPI
+import TwitterClasses
 
 def lambda_handler():
-    postTweet()
+    TwitterClasses.postTweet()
     return

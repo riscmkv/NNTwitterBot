@@ -12,11 +12,9 @@ This github repository is BASED and is yanderedev levels of spaghetti
 - [pytorch](https://github.com/pytorch/pytorch)
 
 # Filesystem
-Neural net code can be found in resnext.py.
+Neural net code can be found in resnext.py
 
-Twitter bot code can be found in twitterBotAPI.py. Authorization keys obviously not uploaded to github.
-
-The file structure of the bot is poorly named:
+Bot code which is required by ALL modules can be found in NNClassify.py
 
 - ./fan_submit: After the bot scrapes new messages, follower submissions are added to this folder
 - ./submissions: This is where I add my own "curated" memes. It's not actually submissions.
