@@ -5,7 +5,6 @@ if type(tf.contrib) != type(tf): tf.contrib._warning = None
 from tensorflow.keras.models import load_model
 import numpy as np
 import matplotlib.pyplot as plt
-from skimage.transform import resize
 from sklearn import preprocessing
 import pickle
 import glob
@@ -18,6 +17,15 @@ import confidence
 import resnext
 import os
 from urllib import request
+from tensorflow.keras import datasets, layers, models
+from tensorflow.keras.models import load_model
+from PIL import Image
+from skimage import data, color
+from skimage.transform import rescale, resize
+from sklearn.model_selection import train_test_split
+from skimage.transform import resize
+from keras.utils import to_categorical
+
 
 logging.getLogger('tensorflow').disabled = True
 
