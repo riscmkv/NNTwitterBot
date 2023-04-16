@@ -2,6 +2,16 @@
 
 This github repository is BASED and is yanderedev levels of spaghetti
 
+# Dependencies
+- [twython](https://github.com/ryanmcgrath/twython)
+- [tensorflow](https://github.com/tensorflow/tensorflow)
+- [oauth2](https://github.com/joestump/python-oauth2)
+- [scikit image](https://github.com/scikit-image/scikit-image)
+- [numpy](https://github.com/numpy/numpy)
+- [keras](https://github.com/keras-team/keras)
+- [pytorch](https://github.com/pytorch/pytorch)
+
+# Filesystem
 Neural net code can be found in resnext.py.
 
 Twitter bot code can be found in twitterBotAPI.py. Authorization keys obviously not uploaded to github.
