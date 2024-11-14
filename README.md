@@ -1,8 +1,8 @@
 # Neural Net Guesses Memes V2: Bluesky
 
-When cloning, make sure to pull all submodules:
+The bot is up and running!
 
-`git submodule update --init --recursive`
+https://bsky.app/profile/resnextguesser.bsky.social
 
 ![](readme_media/uc1.gif)
 
