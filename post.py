@@ -19,9 +19,9 @@ def post_single_image(img_f, text) -> None:
     client.send_images(text=text, images=imgs)
 
 def gen_tweet_string(prediction, img_path):
-    tweet_str =  "top 5 guesses:\n"
+    tweet_str =  "top 5 guesses:"
     for i in range(5):
-        tweet_str +=  "%s [ %.3f ]\n"%(prediction[0][i], prediction[1][i])
+        tweet_str +=  "\n%s [ %.3f ]"%(prediction[0][i], prediction[1][i])
     return tweet_str
 
 def main() -> None:
