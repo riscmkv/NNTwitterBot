@@ -1,3 +1,7 @@
+pswd.json
+*.env
+imgs/posted/
+imgs/submissions/
 auth.py
 __pycache__/
 fan_submit/
